@@ -26,14 +26,18 @@ class AlarmManager(DataManager):
     def add_alarm(self, alarm):
         tmp = {}
         tmp['name'] = alarm.name
-        self.alarms[alarm.name] = tmp
-        self.update_json()
+        self.add_item(alarm.name, tmp)
+        # self.alarms[alarm.name] = tmp
+        # self.update_json()
 
     def get_alarms(self):
         return self.get_items()
 
+    def get_count_alarms(self):
+        return len(self.get_alarms())
+
     def has_any_alarms(self):
-        return len(self.get_alarms()) > 0
+        return self.get_count_alarms() > 0
 
     def print_alarms(self):
         if self.has_any_alarms():

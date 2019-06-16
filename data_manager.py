@@ -20,6 +20,10 @@ class DataManager():
     def get_items(self):
         return list(self.items.values())
 
+    def add_item(self, key, value):
+        self.items[key] = value
+        self.update_json()
+
     def update_json(self):
         with open(self.json_filepath, 'w') as output:
             json.dump(self.items, output)
