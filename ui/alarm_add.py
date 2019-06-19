@@ -3,6 +3,7 @@ from tkinter import *
 from alarm import Alarm
 
 import ui.alarm_repeat
+import ui.alarm_time
 from ui.imagebutton import ImageButton
 
 class NewAlarm(Frame):
@@ -11,11 +12,14 @@ class NewAlarm(Frame):
         self.alarm_manager = alarm_manager
         self.container = container
 
-        ar = ui.alarm_repeat.AlarmRepeat(self, self.alarm_manager)
-        ar.pack()
-        
         self.name_entry = Entry(self, text='Name')
         self.name_entry.pack()
+
+        self.at = ui.alarm_time.AlarmTime(self, self.alarm_manager)
+        self.at.pack()
+
+        self.ar = ui.alarm_repeat.AlarmRepeat(self, self.alarm_manager)
+        self.ar.pack()
 
         ok_bt = ImageButton(container=self, path_to_img='images/ok.png', action=self.confirm)
         ok_bt.pack()
@@ -25,6 +29,7 @@ class NewAlarm(Frame):
 
     def confirm(self):
         alarm = Alarm(name=self.name_entry.get())
+        alarm.set_at(hour=self.at.get_hours(), minute=self.at.get_minutes())
         self.alarm_manager.add_alarm(alarm)
         self.pack_forget()
         alarms = ui.alarms.Alarms(self.container)
